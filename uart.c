@@ -51,7 +51,7 @@ void uart0_send_byte(uint8_t data) {
     if (uart0_ready) { // Can send directly
         uart0_ready = false;
         UDR0 = data;
-    } else if (uart0_tail != uart0_head) { // Not empty but needs to be added to queue
+    } else if (uart0_tail != uart0_head || !uart0_full) { // Not empty but needs to be added to queue
         uart0_data[uart0_head] = data;
         uart0_head = (uart0_head + 1) % RING_BUFFER_SIZE;
         if (uart0_tail == uart0_head) {
