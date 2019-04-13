@@ -67,7 +67,7 @@ void uart0_send_byte(uint8_t data) {
     }
 }
 
-void uart0_send_buf(uint8_t *data, uint16_t size) {
+void uart0_send_buf(const uint8_t *data, uint16_t size) {
     for (uint16_t c = 0; c < size; c++) {
         uart0_send_byte(data[c]);
     }
