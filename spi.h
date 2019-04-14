@@ -23,8 +23,9 @@ void spi_init(bool lsb_first, uint8_t f_bit);
  * but is also used to write the data which got read.
  * @param buf the input-output buffer
  * @param size the number of elements to read/write
+ * @param callback a functor that gets called when the transmission is complete
  */
-void spi_tx_rx(uint8_t *buf, uint16_t size);
+void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void));
 
 
 #endif //FLIGHTCONTROLLER_SPI_H

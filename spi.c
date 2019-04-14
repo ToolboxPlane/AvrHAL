@@ -10,14 +10,19 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-volatile uint8_t *_buf;
-volatile uint16_t _size;
+volatile uint8_t *_buf = 0;
+volatile uint16_t _size = 0;
+void (*_callback)(void) = 0;
 
 ISR(SPI_STC_vect) {
     _buf[-1] = SPDR;
     if (_size > 0) {
         SPDR = *_buf++;
         --_size;
+    } else {
+        if (_callback != 0) {
+            (*_callback)();
+        }
     }
 }
 
@@ -30,9 +35,10 @@ void spi_init(bool lsb_first, uint8_t f_bit) {
     SPSR = (f_bit >> 2) & 0b1;
 }
 
-void spi_tx_rx(uint8_t *buf, uint16_t size) {
+void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void)) {
     _buf = buf;
     _size = size;
+    _callback = callback;
     if (_size > 0) {
         SPDR = *_buf++;
         --_size;
