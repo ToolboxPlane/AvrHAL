@@ -26,6 +26,16 @@
  * @param twps the twi prescaler bits (only two bits, so values need to be in [0,3]
  */
 void i2c_init(uint8_t twbr, uint8_t twps);
+
+/**
+ * Send a buffer to a device and then read a number of bytes from the device.
+ * @param addr the 7-bit adress of the device (without the RW-Bit)
+ * @param send a pointer to the data to send
+ * @param send_size the number of bytes to send
+ * @param recv a pointer to the location where the received bytes should be written to (can be the same as send)
+ * @param recv_size the number of bytes to read
+ * @param callback a function that gets called after the transmission, the bool signals if everything was successful
+ */
 void i2c_send_receive(uint8_t addr, const uint8_t *send, uint16_t send_size,
         uint8_t *recv, uint16_t recv_size, void (*callback)(bool));
 
