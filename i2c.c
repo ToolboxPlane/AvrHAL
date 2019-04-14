@@ -10,13 +10,13 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-volatile uint8_t _addr = 0;
-volatile const uint8_t *_send = 0;
-volatile uint16_t _send_size = 0;
-volatile uint8_t *_recv = 0;
-volatile uint16_t _recv_size = 0;
-void (*_callback)(bool) = 0;
-volatile bool _restart_sent = false;
+static volatile uint8_t _addr = 0;
+static volatile const uint8_t *_send = 0;
+static volatile uint16_t _send_size = 0;
+static volatile uint8_t *_recv = 0;
+static volatile uint16_t _recv_size = 0;
+static void (*_callback)(bool) = 0;
+static volatile bool _restart_sent = false;
 
 ISR(TWI_vect) {
     uint8_t status = TWSR & 0b11111000;

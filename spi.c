@@ -10,9 +10,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-volatile uint8_t *_buf = 0;
-volatile uint16_t _size = 0;
-void (*_callback)(void) = 0;
+static volatile uint8_t *_buf = 0;
+static volatile uint16_t _size = 0;
+static void (*_callback)(void) = 0;
 
 ISR(SPI_STC_vect) {
     _buf[-1] = SPDR;
