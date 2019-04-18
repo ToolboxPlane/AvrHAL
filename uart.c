@@ -27,7 +27,7 @@ typedef struct {
     volatile uint8_t * const udr;
 } uart_instance_t;
 
-uart_instance_t instances[4] = {
+static uart_instance_t instances[4] = {
     {.ucsra = &UCSR0A, .ucsrb = &UCSR0B, .ucsrc = &UCSR0C, .ubrr = &UBRR0, .udr = &UDR0},
     {.ucsra = &UCSR1A, .ucsrb = &UCSR1B, .ucsrc = &UCSR1C, .ubrr = &UBRR1, .udr = &UDR1},
     {.ucsra = &UCSR2A, .ucsrb = &UCSR2B, .ucsrc = &UCSR2C, .ubrr = &UBRR2, .udr = &UDR2},

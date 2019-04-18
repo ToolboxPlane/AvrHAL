@@ -23,27 +23,31 @@ typedef enum {
 
 /**
  * Initialize, enable and start the pwm
+ * @param id the number of the timer, should be in {1,3,4,5}
  * @param pwm_clock_option a value of pwm_clock_option_t to select the prescaler
  * @param top the maximum value of the counter, should be in [1,65535]
  */
-void pwm1_init(pwm_clock_option_t pwm_clock_option, uint16_t top);
+void pwm_init(uint8_t id, pwm_clock_option_t pwm_clock_option, uint16_t top);
 
 /**
  * Set the pwm1 output a to specifiy duty cycle (relative to top)
+ * @param id the number of the timer, should be in {1,3,4,5}
  * @param val
  */
-void pwm1_set_out_a(uint16_t val);
+void pwm_set_out_a(uint8_t id, uint16_t val);
 
 /**
  * Set the pwm1 output b to specifiy duty cycle (relative to top)
+ * @param id the number of the timer, should be in {1,3,4,5}
  * @param val
  */
-void pwm1_set_out_b(uint16_t val);
+void pwm_set_out_b(uint8_t id, uint16_t val);
 
 /**
  * Set the pwm1 output c to specifiy duty cycle (relative to top)
+ * @param id the number of the timer, should be in {1,3,4,5}
  * @param val
  */
-void pwm1_set_out_c(uint16_t val);
+void pwm_set_out_c(uint8_t id, uint16_t val);
 
 #endif //FLIGHTCONTROLLER_PWM16BIT_H
