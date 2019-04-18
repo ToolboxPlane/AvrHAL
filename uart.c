@@ -34,13 +34,6 @@ uart_instance_t instances[4] = {
     {.ucsra = &UCSR3A, .ucsrb = &UCSR3B, .ucsrc = &UCSR3C, .ubrr = &UBRR3, .udr = &UDR3}
 };
 
-volatile uart_callback_t uart0_callback = 0;
-volatile uint8_t uart0_data[RING_BUFFER_SIZE];
-volatile uint8_t uart0_tail = 0;
-volatile uint8_t uart0_head = 0;
-volatile bool uart0_full = false;
-volatile bool uart0_ready = true;
-
 // Data register empty
 void udre_handler(uint8_t id) {
     if (instances[id].full ||
