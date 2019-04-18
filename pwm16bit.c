@@ -15,7 +15,7 @@ typedef struct {
     volatile uint16_t * const ocra, * const ocrb, * const ocrc;
 } pwm_instance_t;
 
-static pwm_instance_t instances [] = {
+static pwm_instance_t instances [6] = {
     {0},
     {.tccra = &TCCR1A, .tccrb = &TCCR1B, .tccrc = &TCCR1C, .timsk = &TIMSK1, .tifr = &TIFR1,
          .icr = &ICR1, .tcnt = &TCNT1,
