@@ -19,6 +19,11 @@ typedef enum {
     external_rising = 7
 } timer_clock_option_t;
 
+/**
+ * Initialize, enable and start the timer.
+ * @param timer_clock_option the prescaler
+ * @param callback a functor that gets called on every overflow
+ */
 void timer0_init(timer_clock_option_t timer_clock_option, void (*callback)(void));
 
 #endif //FLIGHTCONTROLLER_TIMER8BIT_H
