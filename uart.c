@@ -27,7 +27,7 @@ typedef struct {
     volatile uint8_t * const udr;
 } uart_instance_t;
 
-static uart_instance_t instances[4] = {
+static volatile uart_instance_t instances[4] = {
     {.ucsra = &UCSR0A, .ucsrb = &UCSR0B, .ucsrc = &UCSR0C, .ubrr = &UBRR0, .udr = &UDR0},
     {.ucsra = &UCSR1A, .ucsrb = &UCSR1B, .ucsrc = &UCSR1C, .ubrr = &UBRR1, .udr = &UDR1},
     {.ucsra = &UCSR2A, .ucsrb = &UCSR2B, .ucsrc = &UCSR2C, .ubrr = &UBRR2, .udr = &UDR2},
@@ -35,7 +35,7 @@ static uart_instance_t instances[4] = {
 };
 
 // Data register empty
-void udre_handler(uint8_t id) {
+void tx_handler(uint8_t id) {
     if (instances[id].full ||
             instances[id].head != instances[id].tail) { // Still data available
         *instances[id].udr = instances[id].data[instances[id].tail];
@@ -53,10 +53,10 @@ void rx_handler(uint8_t id) {
     }
 }
 
-ISR(USART0_UDRE_vect) { udre_handler(0); }
-ISR(USART1_UDRE_vect) { udre_handler(1); }
-ISR(USART2_UDRE_vect) { udre_handler(2); }
-ISR(USART3_UDRE_vect) { udre_handler(3); }
+ISR(USART0_TX_vect) { tx_handler(0); }
+ISR(USART1_TX_vect) { tx_handler(1); }
+ISR(USART2_TX_vect) { tx_handler(2); }
+ISR(USART3_TX_vect) { tx_handler(3); }
 ISR(USART0_RX_vect) { rx_handler(0); }
 ISR(USART1_RX_vect) { rx_handler(1); }
 ISR(USART2_RX_vect) { rx_handler(2); }
@@ -69,7 +69,7 @@ void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback) {
     instances[id].full = false;
     instances[id].ready = true;
     *instances[id].ucsra = 0b00000000; // Reset all flags, no double transmission speed
-    *instances[id].ucsrb = 0b10111000; // RX complete isr, data register empty isr, rx, tx enabled, 8 bit data
+    *instances[id].ucsrb = 0b11011000; // RX complete isr, TX complete isr, rx, tx enabled, 8 bit data
     *instances[id].ucsrc = 0b00000110; // Async UART, No Parity, 1 Stop Bit, 8 data bits
     *instances[id].ubrr = F_CPU / (16 * baud) - 1;
 }
