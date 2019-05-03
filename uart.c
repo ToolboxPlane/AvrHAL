@@ -12,7 +12,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define RING_BUFFER_SIZE 32
+#define RING_BUFFER_SIZE 64
 
 typedef struct {
     volatile uart_callback_t callback;
