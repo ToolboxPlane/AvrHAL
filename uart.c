@@ -11,8 +11,11 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <math.h>
 
 #define RING_BUFFER_SIZE 64
+
+#define MIN_U2X_BAUD (F_CPU/(16*(255 + 1)) + 1)
 
 typedef struct {
     volatile uart_callback_t callback;
@@ -71,7 +74,12 @@ void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback) {
     *instances[id].ucsra = 0b00000000; // Reset all flags, no double transmission speed
     *instances[id].ucsrb = 0b11011000; // RX complete isr, TX complete isr, rx, tx enabled, 8 bit data
     *instances[id].ucsrc = 0b00000110; // Async UART, No Parity, 1 Stop Bit, 8 data bits
-    *instances[id].ubrr = F_CPU / (16 * baud) - 1;
+    if (baud > MIN_U2X_BAUD) {
+        *instances[id].ubrr = lroundf(F_CPU / (8.0 * baud) - 1);
+        *instances[id].ucsra |= (1 << 1); // Switch to double transmission speed
+    } else {
+        *instances[id].ubrr = lroundf(F_CPU / (16.0 * baud) - 1);
+    }
 }
 
 void uart_send_byte(uint8_t id, uint8_t data) {
