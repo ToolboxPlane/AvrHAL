@@ -16,7 +16,7 @@ static volatile uint16_t _send_size = 0;
 static volatile uint8_t *_recv = 0;
 static volatile uint16_t _recv_size = 0;
 static void (*_callback)(bool) = 0;
-static volatile bool _restart_sent = false;
+static volatile bool _restart_or_stop_sent = false;
 
 ISR(TWI_vect) {
     uint8_t status = TWSR & 0b11111000;
@@ -34,30 +34,39 @@ ISR(TWI_vect) {
             // Arbitration lost (we have only one master, this should not happen)
             (*_callback)(false);
         }
-    } else if (_recv_size > 0) {
-        if (!_restart_sent) { // Need to send the repeated start
-            TWCR = 0b10100101; // Generate the start condition
-            _restart_sent = true;
+    } else if (!_restart_or_stop_sent) {
+        if (_recv_size > 0) {
+            TWCR = 0b10100101; // Generate the (repeated-) start condition
         } else {
-            if (status == 0x08 || status == 0x10) { // (Re)start send, write the adress
-                TWDR = (_addr << 1) | 1; // Load the adress with the write bit
-                TWCR = 0b10000101; // Start the transmission by clearing the interrupt flag
-            } else if (status == 0x40 || status == 0x50) { // Address/Data send, ack received
-                *_recv++ = TWDR;
-                --_recv_size;
+            TWCR = 0b10010101; // Generate the stop condition
+            (*_callback)(true);
+        }
+        _restart_or_stop_sent = true;
+    } else if (_recv_size > 0) {
+        if (status == 0x08 || status == 0x10) { // (Re)start send, write the address
+            TWDR = (_addr << 1) | 1; // Load the address with the write bit
+            TWCR = 0b10000101; // Start the transmission by clearing the interrupt flag
+        } else if (status == 0x40) { // Adress sent, ack received
+            TWCR = 0b11000101; // Generate an ACK
+        } else if (status == 0x50) { // Data received, ack sent
+            *_recv++ = TWDR;
+            --_recv_size;
+            if (_recv_size > 0) {
                 TWCR = 0b11000101; // Generate an ACK
-            } else if (status == 0x58) { // Data byte received, NACK received
-                *_recv++ = TWDR;
-                --_recv_size;
-                TWCR = 0b10000101; // Generate an NACK
-                (*_callback)(true);
             } else {
-                // Arbitration lost in SLA+R or NACK bit
-                (*_callback)(false);
+                TWCR = 0b10000101; // Generate an NACK
             }
+        } else if (status == 0x58) { // Data byte received, NACK sent
+            *_recv++ = TWDR;
+            --_recv_size;
+            TWCR = 0b10010101; // Generate the stop condition
+            (*_callback)(true);
+        } else {
+            // Arbitration lost in SLA+R or NACK bit
+            (*_callback)(false);
         }
     } else {
-        (*_callback)(true);
+        (*_callback)(false);
     }
 }
 
@@ -74,7 +83,7 @@ void i2c_send_receive(uint8_t addr, const uint8_t *send, uint16_t send_size, uin
     _recv = recv;
     _recv_size = recv_size;
     _callback = callback;
-    _restart_sent = false;
+    _restart_or_stop_sent = false;
 
     TWCR = 0b10100101; // Generate the start condition
 }
