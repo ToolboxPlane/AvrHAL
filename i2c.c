@@ -46,15 +46,15 @@ ISR(TWI_vect) {
         if (status == 0x08 || status == 0x10) { // (Re)start send, write the address
             TWDR = (_addr << 1) | 1; // Load the address with the write bit
             TWCR = 0b10000101; // Start the transmission by clearing the interrupt flag
-        } else if (status == 0x40) { // Adress sent, ack received
-            TWCR = 0b11000101; // Generate an ACK
-        } else if (status == 0x50) { // Data received, ack sent
-            *_recv++ = TWDR;
-            --_recv_size;
-            if (_recv_size > 0) {
-                TWCR = 0b11000101; // Generate an ACK
+        } else if (status == 0x40 || status == 0x50) { // Address/Data received, ack sent
+            if (status == 0x50) {
+                *_recv++ = TWDR;
+                --_recv_size;
+            }
+            if (_recv_size <= 1) {
+                TWCR = 0b10000101; // Get last byte
             } else {
-                TWCR = 0b10000101; // Generate an NACK
+                TWCR = 0b11000101; // Get next byte, generate an ACK
             }
         } else if (status == 0x58) { // Data byte received, NACK sent
             *_recv++ = TWDR;
