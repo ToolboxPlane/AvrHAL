@@ -15,19 +15,20 @@ typedef struct {
     volatile uint16_t * const ocra, * const ocrb, * const ocrc;
 } pwm_instance_t;
 
-static pwm_instance_t instances [6] = {
+
+static pwm_instance_t instances [] = {
     {0},
     {.tccra = &TCCR1A, .tccrb = &TCCR1B, .tccrc = &TCCR1C, .timsk = &TIMSK1, .tifr = &TIFR1,
          .icr = &ICR1, .tcnt = &TCNT1,
-         .ocra = &OCR1A, .ocrb = &OCR1B, .ocrc = &OCR1C},
+         .ocra = &OCR1A, .ocrb = &OCR1B, .ocrc = &OCR1C}
     {0},
-    {.tccra = &TCCR3A, .tccrb = &TCCR3B, .tccrc = &TCCR3C, .timsk = &TIMSK3, .tifr = &TIFR3,
+    ,{.tccra = &TCCR3A, .tccrb = &TCCR3B, .tccrc = &TCCR3C, .timsk = &TIMSK3, .tifr = &TIFR3,
         .icr = &ICR3, .tcnt = &TCNT3,
-        .ocra = &OCR3A, .ocrb = &OCR3B, .ocrc = &OCR3C},
-    {.tccra = &TCCR4A, .tccrb = &TCCR4B, .tccrc = &TCCR4C, .timsk = &TIMSK4, .tifr = &TIFR4,
+        .ocra = &OCR3A, .ocrb = &OCR3B, .ocrc = &OCR3C}
+    ,{.tccra = &TCCR4A, .tccrb = &TCCR4B, .tccrc = &TCCR4C, .timsk = &TIMSK4, .tifr = &TIFR4,
         .icr = &ICR4, .tcnt = &TCNT4,
-        .ocra = &OCR4A, .ocrb = &OCR4B, .ocrc = &OCR4C},
-    {.tccra = &TCCR5A, .tccrb = &TCCR5B, .tccrc = &TCCR5C, .timsk = &TIMSK5, .tifr = &TIFR5,
+        .ocra = &OCR4A, .ocrb = &OCR4B, .ocrc = &OCR4C}
+    ,{.tccra = &TCCR5A, .tccrb = &TCCR5B, .tccrc = &TCCR5C, .timsk = &TIMSK5, .tifr = &TIFR5,
         .icr = &ICR5, .tcnt = &TCNT5,
         .ocra = &OCR5A, .ocrb = &OCR5B, .ocrc = &OCR5C}
 };

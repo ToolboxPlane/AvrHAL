@@ -5,8 +5,8 @@
  * @brief pwm16bit @TODO
  */
 
-#ifndef FLIGHTCONTROLLER_PWM16BIT_H
-#define FLIGHTCONTROLLER_PWM16BIT_H
+#ifndef AVR_HAL_PWM16BIT_H
+#define AVR_HAL_PWM16BIT_H
 
 #include <stdint.h>
 
@@ -50,4 +50,4 @@ void pwm_set_out_b(uint8_t id, uint16_t val);
  */
 void pwm_set_out_c(uint8_t id, uint16_t val);
 
-#endif //FLIGHTCONTROLLER_PWM16BIT_H
+#endif //AVR_HAL_PWM16BIT_H

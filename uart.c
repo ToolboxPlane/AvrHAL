@@ -30,11 +30,18 @@ typedef struct {
     volatile uint8_t * const udr;
 } uart_instance_t;
 
-static volatile uart_instance_t instances[4] = {
-    {.ucsra = &UCSR0A, .ucsrb = &UCSR0B, .ucsrc = &UCSR0C, .ubrr = &UBRR0, .udr = &UDR0},
-    {.ucsra = &UCSR1A, .ucsrb = &UCSR1B, .ucsrc = &UCSR1C, .ubrr = &UBRR1, .udr = &UDR1},
-    {.ucsra = &UCSR2A, .ucsrb = &UCSR2B, .ucsrc = &UCSR2C, .ubrr = &UBRR2, .udr = &UDR2},
-    {.ucsra = &UCSR3A, .ucsrb = &UCSR3B, .ucsrc = &UCSR3C, .ubrr = &UBRR3, .udr = &UDR3}
+static volatile uart_instance_t instances[] = {
+    {.ucsra = &UCSR0A, .ucsrb = &UCSR0B, .ucsrc = &UCSR0C, .ubrr = &UBRR0, .udr = &UDR0}
+#ifdef UDR1
+    ,{.ucsra = &UCSR1A, .ucsrb = &UCSR1B, .ucsrc = &UCSR1C, .ubrr = &UBRR1, .udr = &UDR1}
+#endif
+#ifdef UDR2
+    ,{.ucsra = &UCSR2A, .ucsrb = &UCSR2B, .ucsrc = &UCSR2C, .ubrr = &UBRR2, .udr = &UDR2}
+#endif
+#ifdef UDR3
+    ,{.ucsra = &UCSR3A, .ucsrb = &UCSR3B, .ucsrc = &UCSR3C, .ubrr = &UBRR3, .udr = &UDR3}
+#endif
+
 };
 
 // Data register empty
@@ -56,14 +63,23 @@ void rx_handler(uint8_t id) {
     }
 }
 
-ISR(USART0_TX_vect) { tx_handler(0); }
-ISR(USART1_TX_vect) { tx_handler(1); }
-ISR(USART2_TX_vect) { tx_handler(2); }
-ISR(USART3_TX_vect) { tx_handler(3); }
+#ifndef UDR1
+ISR(USART_RX_vect) { rx_handler(0); }
+ISR(USART_TX_vect) { tx_handler(0); }
+#else
 ISR(USART0_RX_vect) { rx_handler(0); }
+ISR(USART0_TX_vect) { tx_handler(0); }
 ISR(USART1_RX_vect) { rx_handler(1); }
+ISR(USART1_TX_vect) { tx_handler(1); }
+#endif
+#ifdef UDR2
 ISR(USART2_RX_vect) { rx_handler(2); }
+ISR(USART2_TX_vect) { tx_handler(2); }
+#endif
+#ifdef UDR3
 ISR(USART3_RX_vect) { rx_handler(3); }
+ISR(USART3_TX_vect) { tx_handler(3); }
+#endif
 
 void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback) {
     instances[id].callback = rx_callback;

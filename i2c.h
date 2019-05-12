@@ -5,8 +5,8 @@
  * @brief i2c @TODO
  */
 
-#ifndef FLIGHTCONTROLLER_I2C_H
-#define FLIGHTCONTROLLER_I2C_H
+#ifndef AVR_HAL_I2C_H
+#define AVR_HAL_I2C_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -40,4 +40,4 @@ void i2c_send_receive(uint8_t addr, const uint8_t *send, uint16_t send_size,
         uint8_t *recv, uint16_t recv_size, void (*callback)(bool));
 
 
-#endif //FLIGHTCONTROLLER_I2C_H
+#endif //AVR_HAL_I2C_H

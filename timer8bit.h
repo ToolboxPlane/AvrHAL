@@ -5,8 +5,8 @@
  * @brief timer8bit @TODO
  */
 
-#ifndef FLIGHTCONTROLLER_TIMER8BIT_H
-#define FLIGHTCONTROLLER_TIMER8BIT_H
+#ifndef AVR_HAL_TIMER8BIT_H
+#define AVR_HAL_TIMER8BIT_H
 
 typedef enum {
     no_clock = 0,
@@ -26,4 +26,4 @@ typedef enum {
  */
 void timer0_init(timer_clock_option_t timer_clock_option, void (*callback)(void));
 
-#endif //FLIGHTCONTROLLER_TIMER8BIT_H
+#endif //AVR_HAL_TIMER8BIT_H

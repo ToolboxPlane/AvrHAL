@@ -7,8 +7,8 @@
 
 #include <stdint.h>
 
-#ifndef FLIGHTCONTROLLER_UART_H
-#define FLIGHTCONTROLLER_UART_H
+#ifndef AVR_HAL_UART_H
+#define AVR_HAL_UART_H
 
 typedef void (*uart_callback_t)(uint8_t);
 
@@ -37,4 +37,4 @@ void uart_send_byte(uint8_t id, uint8_t data);
  */
 void uart_send_buf(uint8_t id, const uint8_t *data, uint16_t size);
 
-#endif //FLIGHTCONTROLLER_UART_H
+#endif //AVR_HAL_UART_H

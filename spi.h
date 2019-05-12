@@ -5,8 +5,8 @@
  * @brief spi @TODO
  */
 
-#ifndef FLIGHTCONTROLLER_SPI_H
-#define FLIGHTCONTROLLER_SPI_H
+#ifndef AVR_HAL_SPI_H
+#define AVR_HAL_SPI_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -28,4 +28,4 @@ void spi_init(bool lsb_first, uint8_t f_bit);
 void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void));
 
 
-#endif //FLIGHTCONTROLLER_SPI_H
+#endif //AVR_HAL_SPI_H
