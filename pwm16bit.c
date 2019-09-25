@@ -21,7 +21,7 @@ static pwm_instance_t instances [] = {
     {.tccra = &TCCR1A, .tccrb = &TCCR1B, .tccrc = &TCCR1C, .timsk = &TIMSK1, .tifr = &TIFR1,
          .icr = &ICR1, .tcnt = &TCNT1,
          .ocra = &OCR1A, .ocrb = &OCR1B, .ocrc = &OCR1C}
-    {0},
+    ,{0}
     ,{.tccra = &TCCR3A, .tccrb = &TCCR3B, .tccrc = &TCCR3C, .timsk = &TIMSK3, .tifr = &TIFR3,
         .icr = &ICR3, .tcnt = &TCNT3,
         .ocra = &OCR3A, .ocrb = &OCR3B, .ocrc = &OCR3C}
