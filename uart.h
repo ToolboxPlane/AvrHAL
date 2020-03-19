@@ -12,13 +12,21 @@
 
 typedef void (*uart_callback_t)(uint8_t);
 
+typedef enum {
+    NONE = 0b00,
+    EVEN = 0b10,
+    ODD =  0b11
+} uart_parity_t;
+
 /**
  * Initialize and enable the uart 0
  * @param id the number of the uart should be in [0,3]
  * @param baud the baud-rate (for example 9600)
+ * @param parity the type of parity to use
+ * @param stop_bits the number of stop bits to use, needs to be in [1, 2]
  * @param rx_callback a functor which gets called everytime there is a new byte
  */
-void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback);
+void uart_init(uint8_t id, uint32_t baud, uart_parity_t parity, uint8_t stop_bits, uart_callback_t rx_callback);
 
 /**
  * Send a single byte via the uart. This function manages an ring buffer (with size 32), to

@@ -34,12 +34,18 @@ static volatile uart_instance_t instances[] = {
     {.ucsra = &UCSR0A, .ucsrb = &UCSR0B, .ucsrc = &UCSR0C, .ubrr = &UBRR0, .udr = &UDR0}
 #ifdef UDR1
     ,{.ucsra = &UCSR1A, .ucsrb = &UCSR1B, .ucsrc = &UCSR1C, .ubrr = &UBRR1, .udr = &UDR1}
+#else
+    ,{}
 #endif
 #ifdef UDR2
     ,{.ucsra = &UCSR2A, .ucsrb = &UCSR2B, .ucsrc = &UCSR2C, .ubrr = &UBRR2, .udr = &UDR2}
+#else
+    ,{}
 #endif
 #ifdef UDR3
     ,{.ucsra = &UCSR3A, .ucsrb = &UCSR3B, .ucsrc = &UCSR3C, .ubrr = &UBRR3, .udr = &UDR3}
+#else
+    ,{}
 #endif
 
 };
@@ -81,7 +87,7 @@ ISR(USART3_RX_vect) { rx_handler(3); }
 ISR(USART3_TX_vect) { tx_handler(3); }
 #endif
 
-void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback) {
+void uart_init(uint8_t id, uint32_t baud, uart_parity_t parity, uint8_t stop_bits, uart_callback_t rx_callback) {
     instances[id].callback = rx_callback;
     instances[id].tail = 0;
     instances[id].head = 0;
@@ -90,6 +96,10 @@ void uart_init(uint8_t id, uint32_t baud, uart_callback_t rx_callback) {
     *instances[id].ucsra = 0b00000000; // Reset all flags, no double transmission speed
     *instances[id].ucsrb = 0b11011000; // RX complete isr, TX complete isr, rx, tx enabled, 8 bit data
     *instances[id].ucsrc = 0b00000110; // Async UART, No Parity, 1 Stop Bit, 8 data bits
+    *instances[id].ucsrc |= (uint8_t)parity << 4u; // Set parity to actual value
+    if (stop_bits == 2) {
+        *instances[id].ucsrc |= 1u << 3u; // Set stop bits to two if required
+    }
     if (baud > MIN_U2X_BAUD) {
         *instances[id].ubrr = lroundf(F_CPU / (8.0 * baud) - 1);
         *instances[id].ucsra |= (1 << 1); // Switch to double transmission speed
