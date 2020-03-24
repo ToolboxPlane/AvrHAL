@@ -8,10 +8,10 @@
 #include "uart.h"
 
 #include <stdbool.h>
+#include <math.h>
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <math.h>
 
 #define RING_BUFFER_SIZE 64
 
@@ -69,15 +69,21 @@ void rx_handler(uint8_t id) {
     }
 }
 
-#ifndef UDR1
+#ifndef UDR0 // Only one UART
 ISR(USART_RX_vect) { rx_handler(0); }
 ISR(USART_TX_vect) { tx_handler(0); }
-#else
+#endif
+
+#ifdef UDR0
 ISR(USART0_RX_vect) { rx_handler(0); }
 ISR(USART0_TX_vect) { tx_handler(0); }
+#endif
+
+#ifdef UDR1
 ISR(USART1_RX_vect) { rx_handler(1); }
 ISR(USART1_TX_vect) { tx_handler(1); }
 #endif
+
 #ifdef UDR2
 ISR(USART2_RX_vect) { rx_handler(2); }
 ISR(USART2_TX_vect) { tx_handler(2); }
