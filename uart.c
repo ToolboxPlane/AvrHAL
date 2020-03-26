@@ -13,6 +13,10 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#ifndef UDR1
+    #define SINGLE_UART 1
+#endif
+
 #define RING_BUFFER_SIZE 64
 
 #define MIN_U2X_BAUD (F_CPU/(16*(255 + 1)) + 1)
@@ -69,17 +73,12 @@ void rx_handler(uint8_t id) {
     }
 }
 
-#ifndef UDR0 // Only one UART
+#if SINGLE_UART
 ISR(USART_RX_vect) { rx_handler(0); }
 ISR(USART_TX_vect) { tx_handler(0); }
-#endif
-
-#ifdef UDR0
+#else
 ISR(USART0_RX_vect) { rx_handler(0); }
 ISR(USART0_TX_vect) { tx_handler(0); }
-#endif
-
-#ifdef UDR1
 ISR(USART1_RX_vect) { rx_handler(1); }
 ISR(USART1_TX_vect) { tx_handler(1); }
 #endif
@@ -94,6 +93,9 @@ ISR(USART3_TX_vect) { tx_handler(3); }
 #endif
 
 void uart_init(uint8_t id, uint32_t baud, uart_parity_t parity, uint8_t stop_bits, uart_callback_t rx_callback) {
+#if SINGLE_UART
+    id = 0;
+#endif
     instances[id].callback = rx_callback;
     instances[id].tail = 0;
     instances[id].head = 0;
@@ -115,6 +117,9 @@ void uart_init(uint8_t id, uint32_t baud, uart_parity_t parity, uint8_t stop_bit
 }
 
 void uart_send_byte(uint8_t id, uint8_t data) {
+#if SINGLE_UART
+    id = 0;
+#endif
     if (instances[id].ready) { // Can send directly
         instances[id].ready = false;
         *instances[id].udr = data;
