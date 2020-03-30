@@ -32,8 +32,8 @@ void spi_init(bool lsb_first, spi_prescaler_t prescaler) {
     if (lsb_first) {
         SPCR |= (1 << DORD);
     }
-    SPCR |= prescaler & 0b11;
-    SPSR = (prescaler >> 2u) & 0b1;
+    SPCR |= prescaler & 0b11u;
+    SPSR = (prescaler >> 2u) & 0b1u;
 
 #if defined(__AVR_ATmega328P__)
     DDRB |= (1 << 3u) | (1 << 5u); // MOSI and SCK as Output
@@ -48,4 +48,14 @@ void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void)) {
         SPDR = *_buf;
         --_size;
     }
+}
+
+void spi_set_prescaler(spi_prescaler_t prescaler) {
+    uint8_t spcr = SPCR;
+    uint8_t spsr = SPSR;
+    spcr &= ~(0b11u); // Mask away the old prescaler bits
+    spsr &= ~(0b1u);
+
+    SPCR |= prescaler & 0b11u;
+    SPSR = (prescaler >> 2u) & 0b1u;
 }

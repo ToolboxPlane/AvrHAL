@@ -29,6 +29,8 @@ typedef enum {
  */
 void spi_init(bool lsb_first, spi_prescaler_t prescaler);
 
+void spi_set_prescaler(spi_prescaler_t prescaler);
+
 /**
  * Send and receive a number of bytes via the interface. The buffer is used for reading the data to send
  * but is also used to write the data which got read.
