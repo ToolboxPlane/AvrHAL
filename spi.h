@@ -11,12 +11,25 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+typedef enum {
+    DIV_2 = 0b100,
+    DIV_4 = 0b000,
+    DIV_8 = 0b101,
+    DIV_16 = 0b001,
+    DIV_32 = 0b110,
+    DIV_64 = 0b010,
+    DIV_64_2X = 0b111,
+    DIV_128 = 0b011
+} spi_prescaler_t;
+
 /**
  * Initialize and enable the spi in master mode.
  * @param lsb_first true if the data should be send (and received) with the least significant bit first
- * @param f_bit the 3 bits responsible for selecting the prescaler (refer to page 198 for more information)
+ * @param prescaler the 3 bits responsible for selecting the prescaler (refer to page 198 for more information)
  */
-void spi_init(bool lsb_first, uint8_t f_bit);
+void spi_init(bool lsb_first, spi_prescaler_t prescaler);
+
+void spi_set_prescaler(spi_prescaler_t prescaler);
 
 /**
  * Send and receive a number of bytes via the interface. The buffer is used for reading the data to send

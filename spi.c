@@ -15,9 +15,10 @@ static volatile uint16_t _size = 0;
 static void (*_callback)(void) = 0;
 
 ISR(SPI_STC_vect) {
-    _buf[-1] = SPDR;
+    *_buf = SPDR;
+    ++_buf;
     if (_size > 0) {
-        SPDR = *_buf++;
+        SPDR = *_buf;
         --_size;
     } else {
         if (_callback != 0) {
@@ -26,13 +27,17 @@ ISR(SPI_STC_vect) {
     }
 }
 
-void spi_init(bool lsb_first, uint8_t f_bit) {
+void spi_init(bool lsb_first, spi_prescaler_t prescaler) {
     SPCR = 0b11010000; // Enabled, Interrupts enabled, Slave mode
     if (lsb_first) {
         SPCR |= (1 << DORD);
     }
-    SPCR |= f_bit & 0b11;
-    SPSR = (f_bit >> 2) & 0b1;
+    SPCR |= prescaler & 0b11u;
+    SPSR = (prescaler >> 2u) & 0b1u;
+
+#if defined(__AVR_ATmega328P__)
+    DDRB |= (1 << 3u) | (1 << 5u); // MOSI and SCK as Output
+#endif
 }
 
 void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void)) {
@@ -40,7 +45,17 @@ void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void)) {
     _size = size;
     _callback = callback;
     if (_size > 0) {
-        SPDR = *_buf++;
+        SPDR = *_buf;
         --_size;
     }
+}
+
+void spi_set_prescaler(spi_prescaler_t prescaler) {
+    uint8_t spcr = SPCR;
+    uint8_t spsr = SPSR;
+    spcr &= ~(0b11u); // Mask away the old prescaler bits
+    spsr &= ~(0b1u);
+
+    SPCR |= prescaler & 0b11u;
+    SPSR = (prescaler >> 2u) & 0b1u;
 }
