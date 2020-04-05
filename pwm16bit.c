@@ -34,13 +34,13 @@ static pwm_instance_t instances [] = {
 };
 
 void pwm_init(uint8_t id, pwm_clock_option_t pwm_clock_option, uint16_t top) {
-    *instances[id].tccra = 0b10101010; // Enable all three outputs in non inverting mode, set to Fast PWM with ICRn as TOP (mode 14)
-    *instances[id].tccrb = 0b00011000 | pwm_clock_option; //No input capture, select the prescaler
-    *instances[id].tccrc = 0x00; // No force output compare
-    *instances[id].timsk = 0x00; // No interrupts
-    *instances[id].tifr = 0x00; // Clear all interrupt flags
+    *instances[id].tccra = 0b10101010u; // Enable all three outputs in non inverting mode, set to Fast PWM with ICRn as TOP (mode 14)
+    *instances[id].tccrb = 0b00011000u | pwm_clock_option; //No input capture, select the prescaler
+    *instances[id].tccrc = 0x00u; // No force output compare
+    *instances[id].timsk = 0x00u; // No interrupts
+    *instances[id].tifr = 0x00u; // Clear all interrupt flags
     *instances[id].icr = top; // Set the top value
-    *instances[id].tcnt = 0;
+    *instances[id].tcnt = 0u;
 }
 
 void pwm_set_out_a(uint8_t id, uint16_t val) {

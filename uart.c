@@ -108,7 +108,7 @@ void uart_init(uint8_t id, uint32_t baud, uart_parity_t parity, uint8_t stop_bit
     }
     if (baud > MIN_U2X_BAUD) {
         *instances[id].ubrr = lroundf(F_CPU / (8.0 * baud) - 1);
-        *instances[id].ucsra |= (1 << 1); // Switch to double transmission speed
+        *instances[id].ucsra |= (1u << 1u); // Switch to double transmission speed
     } else {
         *instances[id].ubrr = lroundf(F_CPU / (16.0 * baud) - 1);
     }
