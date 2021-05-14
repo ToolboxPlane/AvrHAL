@@ -17,7 +17,7 @@
     #define SINGLE_UART 1
 #endif
 
-#define RING_BUFFER_SIZE 64
+#define RING_BUFFER_SIZE 128
 
 #define MIN_U2X_BAUD (F_CPU/(16*(255 + 1)) + 1)
 
@@ -120,11 +120,12 @@ void uart_send_byte(uint8_t id, uint8_t data) {
 #if SINGLE_UART
     id = 0;
 #endif
-    if (instances[id].ready) { // Can send directly
-        instances[id].ready = false;
+    if (instances[id].ready && (instances[id].head == instances[id].tail)) { // Can send directly
+        // instances[id].ready = false;  // Luca: indicate queue not empty
         *instances[id].udr = data;
     } else if (instances[id].tail != instances[id].head
                 || !instances[id].full) { // Not empty but needs to be added to queue
+        instances[id].ready = false;  // Luca: indicate queue not empty
         instances[id].data[instances[id].head] = data;
         instances[id].head = (instances[id].head + 1) % RING_BUFFER_SIZE;
         if (instances[id].tail == instances[id].head) {
