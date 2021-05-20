@@ -121,7 +121,7 @@ void uart_send_byte(uint8_t id, uint8_t data) {
     id = 0;
 #endif
     if (instances[id].ready && (instances[id].head == instances[id].tail)) { // Can send directly
-        instances[id].ready = false;  // Luca: indicate queue not empty
+        instances[id].ready = false; 
         *instances[id].udr = data;
     } else if (instances[id].tail != instances[id].head
                 || !instances[id].full) { // Not empty but needs to be added to queue
