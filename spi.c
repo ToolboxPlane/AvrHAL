@@ -12,7 +12,7 @@
 
 static volatile uint8_t *_buf = 0;
 static volatile uint16_t _size = 0;
-static void (*_callback)(void) = 0;
+static spi_callback_t _callback = 0;
 
 ISR(SPI_STC_vect) {
     *_buf = SPDR;
@@ -40,7 +40,7 @@ void spi_init(bool lsb_first, spi_prescaler_t prescaler) {
 #endif
 }
 
-void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void)) {
+void spi_tx_rx(uint8_t *buf, uint16_t size, spi_callback_t callback) {
     _buf = buf;
     _size = size;
     _callback = callback;

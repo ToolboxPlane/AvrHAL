@@ -34,11 +34,12 @@ typedef enum {
 #endif
 } timer_clock_option_t;
 
+
 /**
  * Initialize, enable and start the timer.
  * @param timer_clock_option the prescaler
  * @param callback a functor that gets called on every overflow
  */
-void timer_8bit_init(timer_clock_option_t timer_clock_option, void (*callback)(void));
+void timer_8bit_init(timer_clock_option_t timer_clock_option, timer_callback_t callback);
 
 #endif //AVR_HAL_TIMER8BIT_H

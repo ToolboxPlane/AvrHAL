@@ -22,6 +22,8 @@ typedef enum {
     DIV_128 = 0b011
 } spi_prescaler_t;
 
+typedef void (*spi_callback_t)(void);
+
 /**
  * Initialize and enable the spi in master mode.
  * @param lsb_first true if the data should be send (and received) with the least significant bit first
@@ -38,7 +40,7 @@ void spi_set_prescaler(spi_prescaler_t prescaler);
  * @param size the number of elements to read/write
  * @param callback a functor that gets called when the transmission is complete
  */
-void spi_tx_rx(uint8_t *buf, uint16_t size, void (*callback)(void));
+void spi_tx_rx(uint8_t *buf, uint16_t size, spi_callback_t callback);
 
 
 #endif //AVR_HAL_SPI_H
