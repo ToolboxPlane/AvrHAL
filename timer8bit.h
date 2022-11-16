@@ -22,7 +22,7 @@ typedef enum {
     prescaler_128 = 5,
     prescaler_256 = 6,
     prescaler_1024 = 7
-#elif defined (__AVR_ATmega2560__)
+#elif defined(__AVR_ATmega2560__)
     no_clock = 0,
     prescaler_1 = 1,
     prescaler_8 = 2,
@@ -42,4 +42,4 @@ typedef enum {
  */
 void timer_8bit_init(timer_clock_option_t timer_clock_option, timer_callback_t callback);
 
-#endif //AVR_HAL_TIMER8BIT_H
+#endif // AVR_HAL_TIMER8BIT_H

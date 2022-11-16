@@ -19,4 +19,4 @@ void adc_init(void);
  */
 uint16_t adc_read_sync(uint8_t channel);
 
-#endif //AVR_HAL_ADC_H
+#endif // AVR_HAL_ADC_H

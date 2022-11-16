@@ -50,4 +50,4 @@ void pwm_set_out_b(uint8_t id, uint16_t val);
  */
 void pwm_set_out_c(uint8_t id, uint16_t val);
 
-#endif //AVR_HAL_PWM16BIT_H
+#endif // AVR_HAL_PWM16BIT_H

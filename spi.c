@@ -7,8 +7,8 @@
 
 #include "spi.h"
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
 static volatile uint8_t *_buf = 0;
 static volatile uint16_t _size = 0;

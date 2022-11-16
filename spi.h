@@ -43,4 +43,4 @@ void spi_set_prescaler(spi_prescaler_t prescaler);
 void spi_tx_rx(uint8_t *buf, uint16_t size, spi_callback_t callback);
 
 
-#endif //AVR_HAL_SPI_H
+#endif // AVR_HAL_SPI_H

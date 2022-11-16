@@ -8,15 +8,15 @@
 #ifndef AVR_HAL_I2C_H
 #define AVR_HAL_I2C_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  * Some shortcuts for the most used i2c frequencies.
  * @see i2c_init
  */
-#define I2C_CLOCK_100K 18,1
-#define I2C_CLOCK_400K 3,1
+#define I2C_CLOCK_100K 18, 1
+#define I2C_CLOCK_400K 3, 1
 
 /**
  * Initialize and enable the i2c in master mode. The scl-frequency is calculated as
@@ -36,8 +36,8 @@ void i2c_init(uint8_t twbr, uint8_t twps);
  * @param recv_size the number of bytes to read
  * @param callback a function that gets called after the transmission, the bool signals if everything was successful
  */
-void i2c_send_receive(uint8_t addr, const uint8_t *send, uint16_t send_size,
-        uint8_t *recv, uint16_t recv_size, void (*callback)(bool));
+void i2c_send_receive(uint8_t addr, const uint8_t *send, uint16_t send_size, uint8_t *recv, uint16_t recv_size,
+                      void (*callback)(bool));
 
 
-#endif //AVR_HAL_I2C_H
+#endif // AVR_HAL_I2C_H
