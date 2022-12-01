@@ -50,3 +50,7 @@ void timer_8bit_init(timer_clock_option_t timer_clock_option, timer_callback_t c
 
     *instance.tcnt = 0; // Set the counter to 0
 }
+
+uint8_t timer_8bit_get_count() {
+    return *instance.tcnt;
+}
