@@ -16,7 +16,9 @@
     #define SINGLE_UART 1
 #endif
 
-#define RING_BUFFER_SIZE 64
+#ifndef UART_RING_BUFFER_SIZE
+    #define RING_BUFFER_SIZE 512
+#endif
 
 #define MIN_U2X_BAUD (F_CPU / (16 * (255 + 1)) + 1)
 
