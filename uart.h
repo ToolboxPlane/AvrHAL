@@ -5,10 +5,10 @@
  * @brief Definition of the library functions for the universal-asynchronous-receiver-transmitter module.
  */
 
-#include <stdint.h>
-
 #ifndef AVR_HAL_UART_H
 #define AVR_HAL_UART_H
+
+#include <stdint.h>
 
 typedef void (*uart_callback_t)(uint8_t);
 
