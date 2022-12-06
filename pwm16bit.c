@@ -1,6 +1,6 @@
 /**
  * @file pwm16bit.c
- * @author paul
+ * @author Paul Nykiel
  * @date 14.04.19
  * @brief Implementation of the library functions for the pulse width modulation using the 16bit timer.
  */

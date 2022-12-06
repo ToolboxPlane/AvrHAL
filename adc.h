@@ -1,6 +1,6 @@
 /**
  * @file adc.h
- * @author paul
+ * @author Paul Nykiel
  * @date 20.01.18.
  * @brief Definition of the library functions for the analog digital converter.
  */

@@ -1,6 +1,6 @@
 /**
  * @file timer8bit.h
- * @author paul
+ * @author Paul Nykiel
  * @date 14.04.19
  * @brief Definition of the library functions for the 8-bit timer as software interrupt.
  */

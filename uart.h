@@ -1,6 +1,6 @@
 /**
  * @file uart.h
- * @author paul
+ * @author Paul Nykiel
  * @date 12.04.19
  * @brief Definition of the library functions for the universal-asynchronous-receiver-transmitter module.
  */
