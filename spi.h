@@ -2,7 +2,7 @@
  * @file spi.h
  * @author paul
  * @date 12.04.19
- * @brief spi @TODO
+ * @brief Definition of the library functions for the serial peripheral interface.
  */
 
 #ifndef AVR_HAL_SPI_H

@@ -2,7 +2,7 @@
  * @file i2c.c
  * @author paul
  * @date 12.04.19
- * @brief i2c @TODO
+ * @brief Implementation of the library functions for the inter-integrated-circuit module.
  */
 
 #include "i2c.h"
@@ -23,7 +23,7 @@ ISR(TWI_vect) {
 
     if (_send_size > 0) {
         if (status == 0x08) {                          // Start transmitted, transmit the address
-            TWDR = (_addr << 1) | 0;                   // Load the adress with the write bit
+            TWDR = (_addr << 1U) | 0U;                 // Load the adress with the write bit
             TWCR = 0b10000101;                         // Start the transmission by clearing the interrupt flag
         } else if (status == 0x18 || status == 0x28) { // Address or Data transmitted, ACK received
             TWDR = *_send++;

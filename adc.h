@@ -1,6 +1,9 @@
-//
-// Created by paul on 20.01.18.
-//
+/**
+ * @file adc.h
+ * @author paul
+ * @date 20.01.18.
+ * @brief Definition of the library functions for the analog digital converter.
+ */
 
 #ifndef AVR_HAL_ADC_H
 #define AVR_HAL_ADC_H

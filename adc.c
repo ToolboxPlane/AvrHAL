@@ -1,6 +1,10 @@
-//
-// Created by paul on 20.01.18.
-//
+/**
+ * @file adc.c
+ * @author paul
+ * @date 20.01.18.
+ * @brief Implementation of the library functions for the analog digital converter.
+ */
+
 #include "adc.h"
 
 #include <avr/io.h>
@@ -11,9 +15,9 @@ void adc_init(void) {
 }
 
 uint16_t adc_read_sync(uint8_t channel) {
-    ADMUX = 0b01u << 6 | channel; // Internal Ref | Select the channel
-    ADCSRA |= 1u << ADSC;         // Start conversion
-    while (ADCSRA & (1u << ADSC))
+    ADMUX = 0b01U << 6 | channel; // Internal Ref | Select the channel
+    ADCSRA |= 1U << ADSC;         // Start conversion
+    while (ADCSRA & (1U << ADSC))
         ;                       // conversion running
     return ADCL | (ADCH << 8u); // Low byte must be read first
 }

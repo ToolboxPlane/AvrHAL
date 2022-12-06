@@ -2,7 +2,7 @@
  * @file pwm16bit.c
  * @author paul
  * @date 14.04.19
- * @brief pwm16bit @TODO
+ * @brief Implementation of the library functions for the pulse width modulation using the 16bit timer.
  */
 
 #include "pwm16bit.h"
@@ -59,25 +59,25 @@ static pwm_instance_t instances[] = {{0},
                                       .ocrb = &OCR5B,
                                       .ocrc = &OCR5C}};
 
-void pwm_init(uint8_t id, pwm_clock_option_t pwm_clock_option, uint16_t top) {
-    *instances[id].tccra =
+void pwm_init(uint8_t timer_id, pwm_clock_option_t pwm_clock_option, uint16_t top) {
+    *instances[timer_id].tccra =
             0b10101010u; // Enable all three outputs in non inverting mode, set to Fast PWM with ICRn as TOP (mode 14)
-    *instances[id].tccrb = 0b00011000u | pwm_clock_option; // No input capture, select the prescaler
-    *instances[id].tccrc = 0x00u;                          // No force output compare
-    *instances[id].timsk = 0x00u;                          // No interrupts
-    *instances[id].tifr = 0x00u;                           // Clear all interrupt flags
-    *instances[id].icr = top;                              // Set the top value
-    *instances[id].tcnt = 0u;
+    *instances[timer_id].tccrb = 0b00011000u | pwm_clock_option; // No input capture, select the prescaler
+    *instances[timer_id].tccrc = 0x00u;                          // No force output compare
+    *instances[timer_id].timsk = 0x00u;                          // No interrupts
+    *instances[timer_id].tifr = 0x00u;                           // Clear all interrupt flags
+    *instances[timer_id].icr = top;                              // Set the top value
+    *instances[timer_id].tcnt = 0u;
 }
 
-void pwm_set_out_a(uint8_t id, uint16_t val) {
-    *instances[id].ocra = val;
+void pwm_set_out_a(uint8_t timer_id, uint16_t val) {
+    *instances[timer_id].ocra = val;
 }
 
-void pwm_set_out_b(uint8_t id, uint16_t val) {
-    *instances[id].ocrb = val;
+void pwm_set_out_b(uint8_t timer_id, uint16_t val) {
+    *instances[timer_id].ocrb = val;
 }
 
-void pwm_set_out_c(uint8_t id, uint16_t val) {
-    *instances[id].ocrc = val;
+void pwm_set_out_c(uint8_t timer_id, uint16_t val) {
+    *instances[timer_id].ocrc = val;
 }

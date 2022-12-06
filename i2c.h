@@ -2,7 +2,7 @@
  * @file i2c.h
  * @author paul
  * @date 12.04.19
- * @brief i2c @TODO
+ * @brief Definition of the library functions for the inter-integrated-circuit module.
  */
 
 #ifndef AVR_HAL_I2C_H

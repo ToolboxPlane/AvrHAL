@@ -2,7 +2,7 @@
  * @file spi.c
  * @author paul
  * @date 12.04.19
- * @brief spi @TODO
+ * @brief Implementation of the library functions for the serial peripheral interface.
  */
 
 #include "spi.h"
@@ -34,10 +34,6 @@ void spi_init(bool lsb_first, spi_prescaler_t prescaler) {
     }
     SPCR |= prescaler & 0b11u;
     SPSR = (prescaler >> 2u) & 0b1u;
-
-#if defined(__AVR_ATmega328P__)
-    DDRB |= (1 << 3u) | (1 << 5u); // MOSI and SCK as Output
-#endif
 }
 
 void spi_tx_rx(uint8_t *buf, uint16_t size, spi_callback_t callback) {
