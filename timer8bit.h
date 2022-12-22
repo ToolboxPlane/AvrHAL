@@ -8,9 +8,9 @@
 #ifndef AVR_HAL_TIMER8BIT_H
 #define AVR_HAL_TIMER8BIT_H
 
-typedef void (*timer_callback_t)(void);
+#include <stdint.h>
 
-#include <avr/io.h>
+typedef void (*timer_callback_t)(void);
 
 typedef enum {
     no_clock = 0,
@@ -35,6 +35,6 @@ void timer_8bit_init(timer_clock_option_t timer_clock_option, timer_callback_t c
  * Read the current value of the timer
  * @return a value in [0, 255] representing the value of the timer
  */
-uint8_t timer_8bit_get_count();
+uint8_t timer_8bit_get_count(void);
 
 #endif // AVR_HAL_TIMER8BIT_H
