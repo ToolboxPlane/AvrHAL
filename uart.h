@@ -10,8 +10,14 @@
 
 #include <stdint.h>
 
+/**
+ * Type of the callback called when a new byte is received.
+ */
 typedef void (*uart_callback_t)(uint8_t);
 
+/**
+ * Support configurations for the parity bit of the UART configuration..
+ */
 typedef enum { NONE = 0b00, EVEN = 0b10, ODD = 0b11 } uart_parity_t;
 
 /**

@@ -10,6 +10,9 @@
 
 #include <stdint.h>
 
+/**
+ * Possible prescaler options for the 16 bit timer.
+ */
 typedef enum {
     no_clock = 0,
     prescaler_1 = 1,

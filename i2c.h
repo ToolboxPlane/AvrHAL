@@ -12,11 +12,14 @@
 #include <stdint.h>
 
 /**
- * Some shortcuts for the most used i2c frequencies.
- * @see i2c_init
+ * Constant for the configuration of the TWBR register for different frequencies.
  */
-#define I2C_CLOCK_100K 18, 1
-#define I2C_CLOCK_400K 3, 1
+enum { TWBR_100K = 18, TWBR_400K = 3 };
+
+/**
+ * Constant for the configuration of the TWPS register for different frequencies.
+ */
+enum { TWPS_100K = 1, TWPS_400K = 1 };
 
 /**
  * Initialize and enable the i2c in master mode. The scl-frequency is calculated as

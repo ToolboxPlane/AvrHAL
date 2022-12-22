@@ -11,6 +11,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/**
+ * Possible prescaler values for the SPI clock.
+ */
 typedef enum {
     DIV_2 = 0b100,
     DIV_4 = 0b000,
@@ -30,8 +33,6 @@ typedef void (*spi_callback_t)(void);
  * @param prescaler the 3 bits responsible for selecting the prescaler (refer to page 198 for more information)
  */
 void spi_init(bool lsb_first, spi_prescaler_t prescaler);
-
-void spi_set_prescaler(spi_prescaler_t prescaler);
 
 /**
  * Send and receive a number of bytes via the interface. The buffer is used for reading the data to send

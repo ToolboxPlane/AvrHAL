@@ -10,8 +10,14 @@
 
 #include <stdint.h>
 
+/**
+ * Type of the callback used for signalling a timer overflow.
+ */
 typedef void (*timer_callback_t)(void);
 
+/**
+ * Possible prescaler value for the 8 bit timer.
+ */
 typedef enum {
     no_clock = 0,
     prescaler_1 = 1,

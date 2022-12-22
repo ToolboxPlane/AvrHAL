@@ -45,13 +45,3 @@ void spi_tx_rx(uint8_t *buf, uint16_t size, spi_callback_t callback) {
         --_size;
     }
 }
-
-void spi_set_prescaler(spi_prescaler_t prescaler) {
-    uint8_t spcr = SPCR;
-    uint8_t spsr = SPSR;
-    spcr &= ~(0b11u); // Mask away the old prescaler bits
-    spsr &= ~(0b1u);
-
-    SPCR |= prescaler & 0b11u;
-    SPSR = (prescaler >> 2u) & 0b1u;
-}
