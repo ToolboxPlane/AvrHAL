@@ -3,6 +3,7 @@
  * @author Paul Nykiel
  * @date 14.04.19
  * @brief Definition of the library functions for the pulse width modulation using the 16bit timer.
+ * @ingroup HAL
  */
 
 #ifndef AVR_HAL_PWM16BIT_H

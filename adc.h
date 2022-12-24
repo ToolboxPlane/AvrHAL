@@ -3,6 +3,7 @@
  * @author Paul Nykiel
  * @date 20.01.18.
  * @brief Definition of the library functions for the analog digital converter.
+ * @ingroup HAL
  */
 
 #ifndef AVR_HAL_ADC_H

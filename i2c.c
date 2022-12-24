@@ -3,6 +3,7 @@
  * @author Paul Nykiel
  * @date 12.04.19
  * @brief Implementation of the library functions for the inter-integrated-circuit module.
+ * @ingroup HAL
  */
 
 #include "i2c.h"

@@ -3,6 +3,7 @@
  * @author Paul Nykiel
  * @date 12.04.19
  * @brief Definition of the library functions for the inter-integrated-circuit module.
+ * @ingroup HAL
  */
 
 #ifndef AVR_HAL_I2C_H
