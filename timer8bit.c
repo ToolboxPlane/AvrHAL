@@ -12,7 +12,7 @@
 #include <avr/io.h>
 
 typedef struct {
-    volatile timer_callback_t callback;
+    volatile timer_8bit_callback_t callback;
     volatile uint8_t *const tccra, *const tccrb, *const timsk, *const tcnt;
 } timer8bit_instance_t;
 
@@ -25,7 +25,7 @@ ISR(TIMER0_OVF_vect) {
     }
 }
 
-void timer_8bit_init(timer_clock_option_t timer_clock_option, timer_callback_t callback) {
+void timer_8bit_init(timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback) {
     instance.callback = callback;
     *instance.tccra = 0b00000000u;                      // Output compare disconnected, normal mode
     *instance.tccrb = 0b00000000u | timer_clock_option; // No force override, normal mode, prescaler
