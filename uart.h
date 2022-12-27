@@ -43,6 +43,7 @@ void uart_send_byte(uint8_t uart_id, uint8_t data);
 /**
  * Sends multiple bytes via the uart.
  * @see uart_send_byte for more information about the blocking behaviour of this function.
+ * @param uart_id the number of the uart should be in [0,3]
  * @param data a pointer to the first element to send
  * @param size the number of elements to send
  */
