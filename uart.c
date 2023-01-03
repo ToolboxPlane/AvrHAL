@@ -17,7 +17,7 @@
     #define RING_BUFFER_SIZE 512
 #endif
 
-#define MIN_U2X_BAUD (F_CPU / (16 * (255 + 1)) + 1)
+#define MIN_U2X_BAUD (F_CPU / (16L * (255L + 1L)) + 1L)
 
 typedef struct {
     volatile uart_callback_t callback;
@@ -98,15 +98,15 @@ void uart_init(uint8_t uart_id, uint32_t baud, uart_parity_t parity, uint8_t sto
     *instances[uart_id].ucsra = 0b00000000;              // Reset all flags, no double transmission speed
     *instances[uart_id].ucsrb = 0b11011000;              // RX complete isr, TX complete isr, rx, tx enabled, 8 bit data
     *instances[uart_id].ucsrc = 0b00000110;              // Async UART, No Parity, 1 Stop Bit, 8 data bits
-    *instances[uart_id].ucsrc |= (uint8_t) parity << 4u; // Set parity to actual value
+    *instances[uart_id].ucsrc |= (uint8_t) parity << 4U; // Set parity to actual value
     if (stop_bits == 2) {
-        *instances[uart_id].ucsrc |= 1u << 3u; // Set stop bits to two if required
+        *instances[uart_id].ucsrc |= 1U << 3U; // Set stop bits to two if required
     }
     if (baud > MIN_U2X_BAUD) {
-        *instances[uart_id].ubrr = lroundf(F_CPU / (8.0 * baud) - 1);
-        *instances[uart_id].ucsra |= (1u << 1u); // Switch to double transmission speed
+        *instances[uart_id].ubrr = (F_CPU + 4 * baud) / (8 * baud) - 1;
+        *instances[uart_id].ucsra |= (1U << 1U); // Switch to double transmission speed
     } else {
-        *instances[uart_id].ubrr = lroundf(F_CPU / (16.0 * baud) - 1);
+        *instances[uart_id].ubrr = (F_CPU + 8 * baud) / (16 * baud) - 1;
     }
 }
 
