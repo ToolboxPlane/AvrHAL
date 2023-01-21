@@ -59,7 +59,7 @@ ISR(TIMER2_OVF_vect) {
     }
 }
 
-void timer_8bit_init(timer_id_t num, timer_8bit_clock_options timer_clock_option, timer_8bit_callback_t callback) {
+void timer_8bit_init(timer_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback) {
     instances[num].callback = callback;
     *instances[num].tccra = 0b00000000u; // Output compare disconnected, normal mode
     *instances[num].tccrb =

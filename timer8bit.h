@@ -38,7 +38,7 @@ typedef enum {
     prescaler_1024,
     external_falling,
     external_rising
-} timer_8bit_clock_options;
+} timer_8bit_clock_option_t;
 
 /**
  * ID of the 8-bit timers.
@@ -52,7 +52,7 @@ typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_id_t;
  * @param timer_clock_option the prescaler
  * @param callback a functor that gets called on every overflow
  */
-void timer_8bit_init(timer_id_t num, timer_8bit_clock_options timer_clock_option, timer_8bit_callback_t callback);
+void timer_8bit_init(timer_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback);
 
 /**
  * Read the current value of the timer
