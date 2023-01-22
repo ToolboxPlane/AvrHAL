@@ -20,7 +20,7 @@ static volatile timer8bit_instance_t instances[] = {
         {.tccra = &TCCR0A, .tccrb = &TCCR0B, .timsk = &TIMSK0, .tcnt = &TCNT0},
         {.tccra = &TCCR2A, .tccrb = &TCCR2B, .timsk = &TIMSK2, .tcnt = &TCNT2}};
 
-const static uint8_t prescaler_bits[2][10] = {
+static const uint8_t prescaler_bits[2][10] = {
         /*Timer 0:*/
         {/*no_clock=*/0,
          /*prescaler_1=*/1,
@@ -59,7 +59,7 @@ ISR(TIMER2_OVF_vect) {
     }
 }
 
-void timer_8bit_init(timer_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback) {
+void timer_8bit_init(timer_8bit_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback) {
     instances[num].callback = callback;
     *instances[num].tccra = 0b00000000u; // Output compare disconnected, normal mode
     *instances[num].tccrb =
@@ -69,6 +69,6 @@ void timer_8bit_init(timer_id_t num, timer_8bit_clock_option_t timer_clock_optio
     *instances[num].tcnt = 0; // Set the counter to 0
 }
 
-uint8_t timer_8bit_get_count(timer_id_t num) {
+uint8_t timer_8bit_get_count(timer_8bit_id_t num) {
     return *instances[num].tcnt;
 }

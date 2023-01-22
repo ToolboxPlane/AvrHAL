@@ -43,7 +43,7 @@ typedef enum {
 /**
  * ID of the 8-bit timers.
  */
-typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_id_t;
+typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_8bit_id_t;
 
 
 /**
@@ -52,13 +52,13 @@ typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_id_t;
  * @param timer_clock_option the prescaler
  * @param callback a functor that gets called on every overflow
  */
-void timer_8bit_init(timer_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback);
+void timer_8bit_init(timer_8bit_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback);
 
 /**
  * Read the current value of the timer
  * @param num id of the timer
  * @return a value in [0, 255] representing the value of the timer
  */
-uint8_t timer_8bit_get_count(timer_id_t num);
+uint8_t timer_8bit_get_count(timer_8bit_id_t num);
 
 #endif // AVR_HAL_TIMER8BIT_H
