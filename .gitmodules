@@ -1,0 +1,3 @@
+[submodule "External/MockTools"]
+	path = External/MockTools
+	url = https://github.com/ToolboxPlane/MockTools.git
