@@ -40,11 +40,10 @@ typedef enum {
  * * Timer/Counter Control Register C:
  *      * Force Output compare: disabled as PWM is active
  * * Timer/Counter: initialized to 0
- * * Output Compare Registers: initialized to ß
+ * * Output Compare Registers: initialized to 0
+ * * Input Capture Registers: defines the top in PWM mode, set to parameter "top"
  * * Timer/Counter Interrupt Mask Register: All interrupt disabled
- *
- * * Input Capture Registers: not applicable for PWM mode
- * * Timer/Counter Interrupt Flag Registers: not applicable for PWM mode
+ * * Timer/Counter Interrupt Flag Registers: not applicable as interrupts are disabled
  *
  * @param timer_id the number of the timer, should be in {1,3,4,5}
  * @param pwm_clock_option a value of pwm_clock_option_t to select the prescaler
