@@ -47,7 +47,11 @@ typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_8bit_id_t;
 
 
 /**
- * Initialize, enable and start the timer.
+ * @brief Initialize, enable and start the timer.
+ *
+* For the initialization the following register settings are used (for the corresponding timer id):
+ *
+ *
  * @param num id of the timer
  * @param timer_clock_option the prescaler
  * @param callback a functor that gets called on every overflow

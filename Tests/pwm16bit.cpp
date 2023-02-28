@@ -320,3 +320,91 @@ TEST(TEST_NAME, init_timer_clock_rising) {
     EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
+
+TEST(TEST_NAME, init_timer_top_0) {
+    /*
+     * Initialize timer 1 with no_clock (=0) as clock option and top=0
+     */
+    pwm_init(1, no_clock, 0);
+
+    EXPECT_EQ((TCCR1A >> 6U) & 0b11U, 2); // COMnA
+    EXPECT_EQ((TCCR1A >> 4U) & 0b11U, 2); // COMnB
+    EXPECT_EQ((TCCR1A >> 2U) & 0b11U, 2); // COMnC
+    EXPECT_EQ((TCCR1A & 0b11U) | ((TCCR1B >> 1U) & 0b1100U), 14); // WGMn
+    EXPECT_EQ((TCCR1B >> 7U) & 0b1U, 0); // ICNC
+    EXPECT_EQ((TCCR1B >> 6U) & 0b1U, 0); // ICES
+    EXPECT_EQ((TCCR1B >> 5U) & 0b1U, 0); // Reserved
+    EXPECT_EQ(TCCR1B & 0b111U, 0); // Clock Select
+    EXPECT_EQ((TCCR1C >> 7U) & 0b1, 0); // Force Output Compare A
+    EXPECT_EQ((TCCR1C >> 6U) & 0b1, 0); // Force Output Compare B
+    EXPECT_EQ((TCCR1C >> 5U) & 0b1, 0); // Force Output Compare C
+    EXPECT_EQ(TCNT1, 0); // Timer/Counter
+    EXPECT_EQ(OCR1A, 0); // Output compare register A
+    EXPECT_EQ(OCR1B, 0); // Output compare register B
+    EXPECT_EQ(OCR1C, 0); // Output compare register C
+    EXPECT_EQ(ICR1, 0); // Input Capture register (i.e. top)
+    EXPECT_EQ((TIMSK1 >> 5U) & 0b1U, 0); // ICIE
+    EXPECT_EQ((TIMSK1 >> 3U) & 0b1U, 0); // OICIEnC
+    EXPECT_EQ((TIMSK1 >> 2U) & 0b1U, 0); // OICIEnB
+    EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
+    EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
+}
+
+TEST(TEST_NAME, init_timer_top_1337) {
+    /*
+     * Initialize timer 1 with no_clock (=0) as clock option and top=1337
+     */
+    pwm_init(1, no_clock, 1337);
+
+    EXPECT_EQ((TCCR1A >> 6U) & 0b11U, 2); // COMnA
+    EXPECT_EQ((TCCR1A >> 4U) & 0b11U, 2); // COMnB
+    EXPECT_EQ((TCCR1A >> 2U) & 0b11U, 2); // COMnC
+    EXPECT_EQ((TCCR1A & 0b11U) | ((TCCR1B >> 1U) & 0b1100U), 14); // WGMn
+    EXPECT_EQ((TCCR1B >> 7U) & 0b1U, 0); // ICNC
+    EXPECT_EQ((TCCR1B >> 6U) & 0b1U, 0); // ICES
+    EXPECT_EQ((TCCR1B >> 5U) & 0b1U, 0); // Reserved
+    EXPECT_EQ(TCCR1B & 0b111U, 0); // Clock Select
+    EXPECT_EQ((TCCR1C >> 7U) & 0b1, 0); // Force Output Compare A
+    EXPECT_EQ((TCCR1C >> 6U) & 0b1, 0); // Force Output Compare B
+    EXPECT_EQ((TCCR1C >> 5U) & 0b1, 0); // Force Output Compare C
+    EXPECT_EQ(TCNT1, 0); // Timer/Counter
+    EXPECT_EQ(OCR1A, 0); // Output compare register A
+    EXPECT_EQ(OCR1B, 0); // Output compare register B
+    EXPECT_EQ(OCR1C, 0); // Output compare register C
+    EXPECT_EQ(ICR1, 1337); // Input Capture register (i.e. top)
+    EXPECT_EQ((TIMSK1 >> 5U) & 0b1U, 0); // ICIE
+    EXPECT_EQ((TIMSK1 >> 3U) & 0b1U, 0); // OICIEnC
+    EXPECT_EQ((TIMSK1 >> 2U) & 0b1U, 0); // OICIEnB
+    EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
+    EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
+}
+
+TEST(TEST_NAME, init_timer_top_65535) {
+
+    /*
+     * Initialize timer 1 with no_clock (=0) as clock option and top=65535
+     */
+    pwm_init(1, no_clock, 65535);
+
+    EXPECT_EQ((TCCR1A >> 6U) & 0b11U, 2); // COMnA
+    EXPECT_EQ((TCCR1A >> 4U) & 0b11U, 2); // COMnB
+    EXPECT_EQ((TCCR1A >> 2U) & 0b11U, 2); // COMnC
+    EXPECT_EQ((TCCR1A & 0b11U) | ((TCCR1B >> 1U) & 0b1100U), 14); // WGMn
+    EXPECT_EQ((TCCR1B >> 7U) & 0b1U, 0); // ICNC
+    EXPECT_EQ((TCCR1B >> 6U) & 0b1U, 0); // ICES
+    EXPECT_EQ((TCCR1B >> 5U) & 0b1U, 0); // Reserved
+    EXPECT_EQ(TCCR1B & 0b111U, 0); // Clock Select
+    EXPECT_EQ((TCCR1C >> 7U) & 0b1, 0); // Force Output Compare A
+    EXPECT_EQ((TCCR1C >> 6U) & 0b1, 0); // Force Output Compare B
+    EXPECT_EQ((TCCR1C >> 5U) & 0b1, 0); // Force Output Compare C
+    EXPECT_EQ(TCNT1, 0); // Timer/Counter
+    EXPECT_EQ(OCR1A, 0); // Output compare register A
+    EXPECT_EQ(OCR1B, 0); // Output compare register B
+    EXPECT_EQ(OCR1C, 0); // Output compare register C
+    EXPECT_EQ(ICR1, 65535); // Input Capture register (i.e. top)
+    EXPECT_EQ((TIMSK1 >> 5U) & 0b1U, 0); // ICIE
+    EXPECT_EQ((TIMSK1 >> 3U) & 0b1U, 0); // OICIEnC
+    EXPECT_EQ((TIMSK1 >> 2U) & 0b1U, 0); // OICIEnB
+    EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
+    EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
+}

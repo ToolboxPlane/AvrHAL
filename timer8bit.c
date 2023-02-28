@@ -62,10 +62,10 @@ ISR(TIMER2_OVF_vect) {
 void timer_8bit_init(timer_8bit_id_t num, timer_8bit_clock_option_t timer_clock_option,
                      timer_8bit_callback_t callback) {
     instances[num].callback = callback;
-    *instances[num].tccra = 0b00000000u; // Output compare disconnected, normal mode
+    *instances[num].tccra = 0b00000000U; // Output compare disconnected, normal mode
     *instances[num].tccrb =
-            0b00000000u | prescaler_bits[num][timer_clock_option]; // No force override, normal mode, prescaler
-    *instances[num].timsk = 0b00000001u;                           // Overflow interrupt enabled
+            0b00000000U | prescaler_bits[num][timer_clock_option]; // No force override, normal mode, prescaler
+    *instances[num].timsk = 0b00000001U;                           // Overflow interrupt enabled
 
     *instances[num].tcnt = 0; // Set the counter to 0
 }
