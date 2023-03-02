@@ -233,3 +233,33 @@ TEST(TEST_NAME, init__timer_2_callback) {
     TIMER2_OVF_vect();
     EXPECT_TRUE(callbackCalled);
 }
+
+TEST(TEST_NAME, get__timer_0_0) {
+    TCNT0 = 0;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_0), 0);
+}
+
+TEST(TEST_NAME, get__timer_0_17) {
+    TCNT0 = 17;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_0), 17);
+}
+
+TEST(TEST_NAME, get__timer_0_255) {
+    TCNT0 = 255;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_0), 255);
+}
+
+TEST(TEST_NAME, get__timer_2_0) {
+    TCNT2 = 0;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_2), 0);
+}
+
+TEST(TEST_NAME, get__timer_2_17) {
+    TCNT2 = 17;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_2), 17);
+}
+
+TEST(TEST_NAME, get__timer_2_255) {
+    TCNT2 = 255;
+    EXPECT_EQ(timer_8bit_get_count(TIMER_ID_2), 255);
+}
