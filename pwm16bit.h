@@ -26,7 +26,25 @@ typedef enum {
 } pwm_clock_option_t;
 
 /**
- * Initialize, enable and start the pwm
+ * @brief Initialize, enable and start the pwm
+ *
+ * For the initialization the following register settings are used (for the corresponding timer id):
+ *  * Timer/Counter Control Register A:
+ *      * Waveform Generation: Fast PWM with ICRn as top (mode 14), see Table 17.2
+ *      * Compare Output mode: non inverting mode (mode 2), see Table 17.4
+ *  * Timer/Counter Control Register B:
+ *      * Input Capture Noise Canceller: disabled, as no input is captured
+ *      * Input Capture Edge Select: disabled, as no input is captured
+ *      * Waveform Generation: see TCCA
+ *      * Clock Select: according to parameter pwm_clock_option
+ * * Timer/Counter Control Register C:
+ *      * Force Output compare: disabled as PWM is active
+ * * Timer/Counter: initialized to 0
+ * * Output Compare Registers: initialized to 0
+ * * Input Capture Registers: defines the top in PWM mode, set to parameter "top"
+ * * Timer/Counter Interrupt Mask Register: All interrupt disabled
+ * * Timer/Counter Interrupt Flag Registers: not applicable as interrupts are disabled
+ *
  * @param timer_id the number of the timer, should be in {1,3,4,5}
  * @param pwm_clock_option a value of pwm_clock_option_t to select the prescaler
  * @param top the maximum value of the counter, should be in [1,65535]
@@ -34,21 +52,30 @@ typedef enum {
 void pwm_init(uint8_t timer_id, pwm_clock_option_t pwm_clock_option, uint16_t top);
 
 /**
- * Set the pwm1 output a to specifiy duty cycle (relative to top)
+ * @brief Set the PWM output a (OCnA) to specific duty cycle (relative to top)
+ *
+ * To set the duty cycle the parameter "val" is written to the respective Output Compare Register A
+ *
  * @param timer_id the number of the timer, should be in {1,3,4,5}
  * @param val the compare value, the duty cycle is given by val/top
  */
 void pwm_set_out_a(uint8_t timer_id, uint16_t val);
 
 /**
- * Set the pwm1 output b to specifiy duty cycle (relative to top)
+ * @brief Set the PWM output b (OCnB) to specific duty cycle (relative to top)
+ *
+ * To set the duty cycle the parameter "val" is written to the respective Output Compare Register B
+ *
  * @param timer_id the number of the timer, should be in {1,3,4,5}
  * @param val the compare value, the duty cycle is given by val/top
  */
 void pwm_set_out_b(uint8_t timer_id, uint16_t val);
 
 /**
- * Set the pwm1 output c to specifiy duty cycle (relative to top)
+ * @brief Set the PWM output c (OCnC) to specific duty cycle (relative to top)
+ *
+ * To set the duty cycle the parameter "val" is written to the respective Output Compare Register C
+ *
  * @param timer_id the number of the timer, should be in {1,3,4,5}
  * @param val the compare value, the duty cycle is given by val/top
  */

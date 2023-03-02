@@ -47,7 +47,19 @@ typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_8bit_id_t;
 
 
 /**
- * Initialize, enable and start the timer.
+ * @brief Initialize, enable and start the timer.
+ *
+ * For the initialization the following register settings are used (for the corresponding timer id):
+ *  * Timer/Counter Control Register A:
+ *      * Compare Match Output A/B: Disconnected (0)
+ *      * Waveform Generation: Normal (0)
+ *  * Timer/Counter Control Register B:
+ *      * Force Output Compare A/B: disabled
+ *      * Waveform Generation: See TCCA
+ *      * Clock select depending on parameter "timer_clock_option"
+ * * Timer/Counter: initialized to 0
+ * * Timer/Counter Interrupt Mask Register: Overflow interrupt (bit 0) enabled
+ *
  * @param num id of the timer
  * @param timer_clock_option the prescaler
  * @param callback a functor that gets called on every overflow
@@ -55,7 +67,10 @@ typedef enum { TIMER_ID_0 = 0, TIMER_ID_2 = 1 } timer_8bit_id_t;
 void timer_8bit_init(timer_8bit_id_t num, timer_8bit_clock_option_t timer_clock_option, timer_8bit_callback_t callback);
 
 /**
- * Read the current value of the timer
+ * @brief Read the current value of the timer
+ *
+ * Returns the value of the Timer/Counter Register
+ *
  * @param num id of the timer
  * @return a value in [0, 255] representing the value of the timer
  */
