@@ -5,7 +5,7 @@ extern "C" {
 #include <HAL/pwm16bit.h>
 }
 
-TEST(TEST_NAME, init_timer_1_basic) {
+TEST(TEST_NAME, init__timer_1_basic) {
     /*
      * Initialize timer 1 with no_clock (=0) as clock option and top=0
      */
@@ -34,7 +34,7 @@ TEST(TEST_NAME, init_timer_1_basic) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_3_basic) {
+TEST(TEST_NAME, init__timer_3_basic) {
     /*
      * Initialize timer 3 with no_clock (=0) as clock option and top=0
      */
@@ -63,7 +63,7 @@ TEST(TEST_NAME, init_timer_3_basic) {
     EXPECT_EQ((TIMSK3 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_4_basic) {
+TEST(TEST_NAME, init__timer_4_basic) {
     /*
      * Initialize timer 4 with no_clock (=0) as clock option and top=0
      */
@@ -92,7 +92,7 @@ TEST(TEST_NAME, init_timer_4_basic) {
     EXPECT_EQ((TIMSK4 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_5_basic) {
+TEST(TEST_NAME, init__timer_5_basic) {
     /*
      * Initialize timer 5 with no_clock (=0) as clock option and top=0
      */
@@ -121,7 +121,7 @@ TEST(TEST_NAME, init_timer_5_basic) {
     EXPECT_EQ((TIMSK5 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_prescaler_1) {
+TEST(TEST_NAME, init__timer_prescaler_1) {
     /*
      * Initialize timer 1 with prescaler 1 as clock option and top=0
      */
@@ -150,7 +150,7 @@ TEST(TEST_NAME, init_timer_prescaler_1) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_prescaler_8) {
+TEST(TEST_NAME, init__timer_prescaler_8) {
     /*
      * Initialize timer 1 with prescaler 8 as clock option and top=0
      */
@@ -179,7 +179,7 @@ TEST(TEST_NAME, init_timer_prescaler_8) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_prescaler_64) {
+TEST(TEST_NAME, init__timer_prescaler_64) {
     /*
      * Initialize timer 1 with prescaler 64 as clock option and top=0
      */
@@ -208,7 +208,7 @@ TEST(TEST_NAME, init_timer_prescaler_64) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_prescaler_256) {
+TEST(TEST_NAME, init__timer_prescaler_256) {
     /*
      * Initialize timer 1 with prescaler 256 as clock option and top=0
      */
@@ -236,7 +236,7 @@ TEST(TEST_NAME, init_timer_prescaler_256) {
     EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
-TEST(TEST_NAME, init_timer_prescaler_1024) {
+TEST(TEST_NAME, init__timer_prescaler_1024) {
     /*
      * Initialize timer 1 with prescaler 1024 as clock option and top=0
      */
@@ -264,7 +264,7 @@ TEST(TEST_NAME, init_timer_prescaler_1024) {
     EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
-TEST(TEST_NAME, init_timer_clock_falling) {
+TEST(TEST_NAME, init__timer_clock_falling) {
     /*
      * Initialize timer 1 with external falling as clock option and top=0
      */
@@ -292,7 +292,7 @@ TEST(TEST_NAME, init_timer_clock_falling) {
     EXPECT_EQ((TIMSK1 >> 1U) & 0b1U, 0); // OICIEnA
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
-TEST(TEST_NAME, init_timer_clock_rising) {
+TEST(TEST_NAME, init__timer_clock_rising) {
     /*
      * Initialize timer 1 with external rising as clock option and top=0
      */
@@ -321,7 +321,7 @@ TEST(TEST_NAME, init_timer_clock_rising) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_top_0) {
+TEST(TEST_NAME, init__timer_top_0) {
     /*
      * Initialize timer 1 with no_clock (=0) as clock option and top=0
      */
@@ -350,7 +350,7 @@ TEST(TEST_NAME, init_timer_top_0) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_top_1337) {
+TEST(TEST_NAME, init__timer_top_1337) {
     /*
      * Initialize timer 1 with no_clock (=0) as clock option and top=1337
      */
@@ -379,7 +379,7 @@ TEST(TEST_NAME, init_timer_top_1337) {
     EXPECT_EQ((TIMSK1 >> 0U) & 0b1U, 0); // TOIEn
 }
 
-TEST(TEST_NAME, init_timer_top_65535) {
+TEST(TEST_NAME, init__timer_top_65535) {
 
     /*
      * Initialize timer 1 with no_clock (=0) as clock option and top=65535
